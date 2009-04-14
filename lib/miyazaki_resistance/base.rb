@@ -33,7 +33,7 @@ module MiyazakiResistance
       time_column_check
       con = write_connection
       self.id = kaeru_timeout{con.genuid.to_i} if new_record?
-      kaeru_timeout {con.put(self.id, raw_attributes)}
+      kaeru_timeout { con.put(self.id, raw_attributes) }
     rescue TimeoutError
       remove_pool(con)
       retry
@@ -91,7 +91,6 @@ module MiyazakiResistance
         query = make_limit(query, limit, args[:offset])
         query = make_order(query, args[:order])
         query = make_conditions(query, args[:conditions])
-        
         results = kaeru_timeout{query.searchget}.map{|r| self.new(r)}
         limit.to_i == 1 ? results.first : results
       rescue TimeoutError

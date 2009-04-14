@@ -1,20 +1,6 @@
-$:.unshift(File.dirname(__FILE__)) unless
-  $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
+begin ; require 'rubygems' rescue LoadError; end
 
-require 'logger'
-require 'timeout'
-require 'tokyotyrant'
-
-Dir.glob("#{File.join(File.dirname(__FILE__), "../initializers")}/*.rb").each{|path| require path}
-
-require 'miyazaki_resistance/tokyo_connection'
-require 'miyazaki_resistance/miyazaki_logger'
-require 'miyazaki_resistance/base'
-require 'miyazaki_resistance/error'
-
-module MiyazakiResistance
-  VERSION = '0.0.9'
-end
+require File.expand_path(File.join( File.dirname( __FILE__ ), '..', 'init.rb' ))
 
 MiyazakiResistance::Base.class_eval do
   include MiyazakiResistance::TokyoConnection
